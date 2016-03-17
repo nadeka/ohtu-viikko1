@@ -39,7 +39,7 @@ public class VarastoTest {
     }
 
     @Test
-    public void lisaysLisaaPienentaaVapaataTilaa() {
+    public void lisaysPienentaaVapaataTilaa() {
         varasto.lisaaVarastoon(8);
 
         // vapaata tilaa pitäisi vielä olla tilavuus-lisättävä määrä eli 2
@@ -63,6 +63,36 @@ public class VarastoTest {
 
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void liikaLisäysAsettaaSaldonMaksimiin() {
+        varasto.lisaaVarastoon(11);
+
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void negatiivinenLisaysEiMuutaSaldoa() {
+        varasto.lisaaVarastoon(-1);
+
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void liikaOttaminenPalauttaaSaldon() {
+        varasto.lisaaVarastoon(5);
+        double saatuMaara = varasto.otaVarastosta(6);
+
+        assertEquals(5, saatuMaara, vertailuTarkkuus);
+    }
+
+    @Test
+    public void negatiivinenOttaminenPalauttaaNollan() {
+        varasto.lisaaVarastoon(5);
+        double saatuMaara = varasto.otaVarastosta(-1);
+
+        assertEquals(0, saatuMaara, vertailuTarkkuus);
     }
 
     @Test
